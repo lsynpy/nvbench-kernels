@@ -30,6 +30,7 @@
     "*.ttgir": "mlir",
     "*.ttir": "mlir",
     "string": "cpp",
-    "stdexcept": "cpp"
+    "stdexcept": "cpp",
+    "algorithm": "cpp"
   }
 }
