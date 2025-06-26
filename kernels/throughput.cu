@@ -1,9 +1,5 @@
 #include <nvbench/nvbench.cuh>
-
-// Grab some testing kernels from NVBench:
 #include <nvbench/test_kernels.cuh>
-
-// Thrust vectors simplify memory management:
 #include <thrust/device_vector.h>
 
 void throughput_bench(nvbench::state &state) {

@@ -1,3 +1,35 @@
 {
-  "cSpell.words": ["chrono", "endforeach", "endfunction", "kitware", "metatarget", "mybench", "nvbench", "NVBENCH"]
+  "cSpell.words": [
+    "bfloat",
+    "chrono",
+    "cinttypes",
+    "ctcs",
+    "cupti",
+    "elems",
+    "endforeach",
+    "endfunction",
+    "fmtstr",
+    "gmem",
+    "hadd",
+    "kitware",
+    "Malloc",
+    "Memcpy",
+    "metatarget",
+    "mybench",
+    "nodiscard",
+    "nullopt",
+    "nvbench",
+    "NVBENCH",
+    "summ",
+    "walltime"
+  ],
+  "files.associations": {
+    "*.flex": "lex",
+    "*.llir": "mlir",
+    "*.lst": "lldb.disassembly",
+    "*.ttgir": "mlir",
+    "*.ttir": "mlir",
+    "string": "cpp",
+    "stdexcept": "cpp"
+  }
 }
