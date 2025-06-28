@@ -52,11 +52,17 @@ void launch_kernel(T *out, T a, int iters, int block_size, int grid_size, int un
   case 1:
     add_kernel<T, 1><<<grid_size, block_size, 0, stream>>>(out, a, iters);
     break;
-  case 4:
-    add_kernel<T, 4><<<grid_size, block_size, 0, stream>>>(out, a, iters);
-    break;
   case 8:
     add_kernel<T, 8><<<grid_size, block_size, 0, stream>>>(out, a, iters);
+    break;
+  case 64:
+    add_kernel<T, 64><<<grid_size, block_size, 0, stream>>>(out, a, iters);
+    break;
+  case 256:
+    add_kernel<T, 256><<<grid_size, block_size, 0, stream>>>(out, a, iters);
+    break;
+  case 512:
+    add_kernel<T, 512><<<grid_size, block_size, 0, stream>>>(out, a, iters);
     break;
   case 1024:
     add_kernel<T, 1024><<<grid_size, block_size, 0, stream>>>(out, a, iters);
@@ -70,7 +76,7 @@ void launch_kernel(T *out, T a, int iters, int block_size, int grid_size, int un
 }
 
 template <typename T>
-void add_benchmark(nvbench::state &state, nvbench::type_list<T>) {
+void loop_unroll_benchmark(nvbench::state &state, nvbench::type_list<T>) {
   T *d_output;
   const auto iters = state.get_int64("Iters");
   const auto block_size = state.get_int64("BlockSize");
@@ -82,10 +88,14 @@ void add_benchmark(nvbench::state &state, nvbench::type_list<T>) {
     unroll = 0;
   else if (variant_str == "unroll1")
     unroll = 1;
-  else if (variant_str == "unroll4")
-    unroll = 4;
   else if (variant_str == "unroll8")
     unroll = 8;
+  else if (variant_str == "unroll64")
+    unroll = 64;
+  else if (variant_str == "unroll256")
+    unroll = 256;
+  else if (variant_str == "unroll512")
+    unroll = 512;
   else if (variant_str == "unroll1024")
     unroll = 1024;
   else
@@ -107,10 +117,13 @@ void add_benchmark(nvbench::state &state, nvbench::type_list<T>) {
   cudaFree(d_output);
 }
 
-using cts_types = nvbench::type_list<float, __half>;
+using cts_types = nvbench::type_list<float>;
 
-NVBENCH_BENCH_TYPES(add_benchmark, NVBENCH_TYPE_AXES(cts_types))
+NVBENCH_BENCH_TYPES(loop_unroll_benchmark, NVBENCH_TYPE_AXES(cts_types))
   .add_int64_power_of_two_axis("Iters", nvbench::range(20, 20, 1))
   .add_int64_power_of_two_axis("BlockSize", nvbench::range(9, 9, 1))
   .add_int64_power_of_two_axis("NumBlocks", nvbench::range(10, 10, 1))
-  .add_string_axis("Variants", {"plain", "unroll1", "unroll4", "unroll8", "unroll1024"});
+  .add_string_axis(
+    "Variants",
+    {"plain", "unroll1", "unroll8", "unroll64", "unroll256", "unroll512", "unroll1024"}
+  );
