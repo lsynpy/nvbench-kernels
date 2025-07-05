@@ -1,13 +1,8 @@
 # Quick Start
 
-```
-git clone https://github.com/NVIDIA/nvbench_demo.git
-
-cd nvbench_demo
-
+```sh
+cd nvbench_kernels
 cmake -DCMAKE_CUDA_ARCHITECTURES=native .
-
 make
-
 ./example_bench
 ```
