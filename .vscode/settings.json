@@ -11,6 +11,7 @@
     "endforeach",
     "endfunction",
     "expf",
+    "fmax",
     "fmtstr",
     "gmem",
     "hadd",
